@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TypeVenteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeVenteRepository::class)]
@@ -21,6 +23,17 @@ class TypeVente
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * @var Collection<int, PriseDeVue>
+     */
+    #[ORM\OneToMany(targetEntity: PriseDeVue::class, mappedBy: 'typeVente')]
+    private Collection $priseDeVues;
+
+    public function __construct()
+    {
+        $this->priseDeVues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +72,36 @@ class TypeVente
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriseDeVue>
+     */
+    public function getPriseDeVues(): Collection
+    {
+        return $this->priseDeVues;
+    }
+
+    public function addPriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if (!$this->priseDeVues->contains($priseDeVue)) {
+            $this->priseDeVues->add($priseDeVue);
+            $priseDeVue->setTypeVente($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if ($this->priseDeVues->removeElement($priseDeVue)) {
+            // set the owning side to null (unless already changed)
+            if ($priseDeVue->getTypeVente() === $this) {
+                $priseDeVue->setTypeVente(null);
+            }
+        }
 
         return $this;
     }

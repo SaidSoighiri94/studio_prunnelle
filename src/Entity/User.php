@@ -64,11 +64,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 35)]
     private ?string $nom = null;
 
+    /**
+     * @var Collection<int, PriseDeVue>
+     */
+    #[ORM\OneToMany(targetEntity: PriseDeVue::class, mappedBy: 'photographe')]
+    private Collection $priseDeVues;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
         $this->pochettes = new ArrayCollection();
         $this->planches = new ArrayCollection();
+        $this->priseDeVues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -278,6 +285,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriseDeVue>
+     */
+    public function getPriseDeVues(): Collection
+    {
+        return $this->priseDeVues;
+    }
+
+    public function addPriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if (!$this->priseDeVues->contains($priseDeVue)) {
+            $this->priseDeVues->add($priseDeVue);
+            $priseDeVue->setPhotographe($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if ($this->priseDeVues->removeElement($priseDeVue)) {
+            // set the owning side to null (unless already changed)
+            if ($priseDeVue->getPhotographe() === $this) {
+                $priseDeVue->setPhotographe(null);
+            }
+        }
 
         return $this;
     }

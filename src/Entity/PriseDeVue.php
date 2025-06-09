@@ -38,6 +38,17 @@ class PriseDeVue
     #[ORM\ManyToOne(inversedBy: 'priseDeVue')]
     private ?Ecole $ecole = null;
 
+    #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $photographe = null;
+
+    #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypePriseVue $typeDePrise = null;
+
+    #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
+    private ?TypeVente $typeVente = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +146,42 @@ class PriseDeVue
     public function setEcole(?Ecole $ecole): static
     {
         $this->ecole = $ecole;
+
+        return $this;
+    }
+
+    public function getPhotographe(): ?User
+    {
+        return $this->photographe;
+    }
+
+    public function setPhotographe(?User $photographe): static
+    {
+        $this->photographe = $photographe;
+
+        return $this;
+    }
+
+    public function getTypeDePrise(): ?TypePriseVue
+    {
+        return $this->typeDePrise;
+    }
+
+    public function setTypeDePrise(?TypePriseVue $typeDePrise): static
+    {
+        $this->typeDePrise = $typeDePrise;
+
+        return $this;
+    }
+
+    public function getTypeVente(): ?TypeVente
+    {
+        return $this->typeVente;
+    }
+
+    public function setTypeVente(?TypeVente $typeVente): static
+    {
+        $this->typeVente = $typeVente;
 
         return $this;
     }
