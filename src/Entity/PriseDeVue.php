@@ -35,6 +35,9 @@ class PriseDeVue
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $prixParent = null;
 
+    #[ORM\ManyToOne(inversedBy: 'priseDeVue')]
+    private ?Ecole $ecole = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class PriseDeVue
     public function setPrixParent(?string $prixParent): static
     {
         $this->prixParent = $prixParent;
+
+        return $this;
+    }
+
+    public function getEcole(): ?Ecole
+    {
+        return $this->ecole;
+    }
+
+    public function setEcole(?Ecole $ecole): static
+    {
+        $this->ecole = $ecole;
 
         return $this;
     }

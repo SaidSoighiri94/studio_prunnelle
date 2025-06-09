@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EcoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EcoleRepository::class)]
@@ -40,6 +42,17 @@ class Ecole
     #[ORM\OneToOne(inversedBy: 'ecole', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Adresse $adresse = null;
+
+    /**
+     * @var Collection<int, PriseDeVue>
+     */
+    #[ORM\OneToMany(targetEntity: PriseDeVue::class, mappedBy: 'ecole')]
+    private Collection $priseDeVue;
+
+    public function __construct()
+    {
+        $this->priseDeVue = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +163,36 @@ class Ecole
     public function setAdresse(Adresse $adresse): static
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriseDeVue>
+     */
+    public function getPriseDeVue(): Collection
+    {
+        return $this->priseDeVue;
+    }
+
+    public function addPriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if (!$this->priseDeVue->contains($priseDeVue)) {
+            $this->priseDeVue->add($priseDeVue);
+            $priseDeVue->setEcole($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if ($this->priseDeVue->removeElement($priseDeVue)) {
+            // set the owning side to null (unless already changed)
+            if ($priseDeVue->getEcole() === $this) {
+                $priseDeVue->setEcole(null);
+            }
+        }
 
         return $this;
     }
