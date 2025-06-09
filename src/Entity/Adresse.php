@@ -31,6 +31,9 @@ class Adresse
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToOne(mappedBy: 'adresse', cascade: ['persist', 'remove'])]
+    private ?Ecole $ecole = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,23 @@ class Adresse
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getEcole(): ?Ecole
+    {
+        return $this->ecole;
+    }
+
+    public function setEcole(Ecole $ecole): static
+    {
+        // set the owning side of the relation if necessary
+        if ($ecole->getAdresse() !== $this) {
+            $ecole->setAdresse($this);
+        }
+
+        $this->ecole = $ecole;
 
         return $this;
     }

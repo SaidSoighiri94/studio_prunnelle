@@ -49,9 +49,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Theme::class, mappedBy: 'createur')]
     private Collection $themes;
 
+    /**
+     * @var Collection<int, Pochette>
+     */
+    #[ORM\OneToMany(targetEntity: Pochette::class, mappedBy: 'createur')]
+    private Collection $pochettes;
+
+    /**
+     * @var Collection<int, Planche>
+     */
+    #[ORM\OneToMany(targetEntity: Planche::class, mappedBy: 'createur')]
+    private Collection $planches;
+
+    #[ORM\Column(length: 35)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
+        $this->pochettes = new ArrayCollection();
+        $this->planches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -189,6 +206,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $theme->setCreateur(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pochette>
+     */
+    public function getPochettes(): Collection
+    {
+        return $this->pochettes;
+    }
+
+    public function addPochette(Pochette $pochette): static
+    {
+        if (!$this->pochettes->contains($pochette)) {
+            $this->pochettes->add($pochette);
+            $pochette->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePochette(Pochette $pochette): static
+    {
+        if ($this->pochettes->removeElement($pochette)) {
+            // set the owning side to null (unless already changed)
+            if ($pochette->getCreateur() === $this) {
+                $pochette->setCreateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Planche>
+     */
+    public function getPlanches(): Collection
+    {
+        return $this->planches;
+    }
+
+    public function addPlanch(Planche $planch): static
+    {
+        if (!$this->planches->contains($planch)) {
+            $this->planches->add($planch);
+            $planch->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanch(Planche $planch): static
+    {
+        if ($this->planches->removeElement($planch)) {
+            // set the owning side to null (unless already changed)
+            if ($planch->getCreateur() === $this) {
+                $planch->setCreateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

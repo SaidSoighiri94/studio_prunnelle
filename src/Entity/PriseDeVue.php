@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PriseDeVueRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PriseDeVueRepository::class)]
@@ -13,8 +14,113 @@ class PriseDeVue
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $datePriseVue = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $cratedAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?int $nbEleve = null;
+
+    #[ORM\Column]
+    private ?int $nb_classe = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    private ?string $prixEcole = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
+    private ?string $prixParent = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDatePriseVue(): ?\DateTimeImmutable
+    {
+        return $this->datePriseVue;
+    }
+
+    public function setDatePriseVue(\DateTimeImmutable $datePriseVue): static
+    {
+        $this->datePriseVue = $datePriseVue;
+
+        return $this;
+    }
+
+    public function getCratedAt(): ?\DateTimeImmutable
+    {
+        return $this->cratedAt;
+    }
+
+    public function setCratedAt(\DateTimeImmutable $cratedAt): static
+    {
+        $this->cratedAt = $cratedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getNbEleve(): ?int
+    {
+        return $this->nbEleve;
+    }
+
+    public function setNbEleve(int $nbEleve): static
+    {
+        $this->nbEleve = $nbEleve;
+
+        return $this;
+    }
+
+    public function getNbClasse(): ?int
+    {
+        return $this->nb_classe;
+    }
+
+    public function setNbClasse(int $nb_classe): static
+    {
+        $this->nb_classe = $nb_classe;
+
+        return $this;
+    }
+
+    public function getPrixEcole(): ?string
+    {
+        return $this->prixEcole;
+    }
+
+    public function setPrixEcole(string $prixEcole): static
+    {
+        $this->prixEcole = $prixEcole;
+
+        return $this;
+    }
+
+    public function getPrixParent(): ?string
+    {
+        return $this->prixParent;
+    }
+
+    public function setPrixParent(?string $prixParent): static
+    {
+        $this->prixParent = $prixParent;
+
+        return $this;
     }
 }
