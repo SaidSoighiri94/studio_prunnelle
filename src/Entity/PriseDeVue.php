@@ -49,6 +49,10 @@ class PriseDeVue
     #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
     private ?TypeVente $typeVente = null;
 
+    #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Theme $theme = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -182,6 +186,18 @@ class PriseDeVue
     public function setTypeVente(?TypeVente $typeVente): static
     {
         $this->typeVente = $typeVente;
+
+        return $this;
+    }
+
+    public function getTheme(): ?Theme
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(?Theme $theme): static
+    {
+        $this->theme = $theme;
 
         return $this;
     }

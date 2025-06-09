@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ThemeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
@@ -25,6 +27,17 @@ class Theme
     #[ORM\ManyToOne(inversedBy: 'themes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createur = null;
+
+    /**
+     * @var Collection<int, PriseDeVue>
+     */
+    #[ORM\OneToMany(targetEntity: PriseDeVue::class, mappedBy: 'theme')]
+    private Collection $priseDeVues;
+
+    public function __construct()
+    {
+        $this->priseDeVues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class Theme
     public function setCreateur(?User $createur): static
     {
         $this->createur = $createur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriseDeVue>
+     */
+    public function getPriseDeVues(): Collection
+    {
+        return $this->priseDeVues;
+    }
+
+    public function addPriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if (!$this->priseDeVues->contains($priseDeVue)) {
+            $this->priseDeVues->add($priseDeVue);
+            $priseDeVue->setTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if ($this->priseDeVues->removeElement($priseDeVue)) {
+            // set the owning side to null (unless already changed)
+            if ($priseDeVue->getTheme() === $this) {
+                $priseDeVue->setTheme(null);
+            }
+        }
 
         return $this;
     }
