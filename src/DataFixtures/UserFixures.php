@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
-use App\Entity\Addresse;
+use App\Entity\Adresse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixures extends Fixture
@@ -52,6 +52,21 @@ class UserFixures extends Fixture
             
             $users[] = $user;
             $manager->persist($user);
+        }
+
+        // Creation de 10 adresses
+        $adresses = [];
+        for ($i=0; $i <10 ; $i++) { 
+            $adresse = (new Adresse())
+            ->setRue($faker->streetName())
+            ->setVille($faker->city())
+            ->setCodePostale($faker->postcode())
+            ->setPays($faker->country())
+            ->setCreatedAt(new \DateTimeImmutable());
+
+        $adresses[] = $adresse;
+        $manager->persist($adresse);
+
         }
 
         $manager->flush();
