@@ -22,7 +22,7 @@ class Adresse
     #[ORM\Column(length: 6)]
     private ?string $codePostale = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 55)]
     private ?string $pays = null;
 
     #[ORM\Column]

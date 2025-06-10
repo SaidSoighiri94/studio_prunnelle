@@ -9,6 +9,9 @@ use Faker\Factory;
 use App\Entity\Adresse;
 use App\Entity\TypePriseVue;
 use App\entity\TypeVente;
+use App\Entity\Theme;
+use App\Entity\Ecole;
+use App\Entity\PriseDeVue;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -64,7 +67,7 @@ class UserFixures extends Fixture
             ->setRue($faker->streetName())
             ->setVille($faker->city())
             ->setCodePostale($faker->postcode())
-            ->setPays($faker->country())
+            ->setPays('France')
             ->setCreatedAt(new \DateTimeImmutable());
 
         $adresses[] = $adresse;
@@ -85,7 +88,7 @@ class UserFixures extends Fixture
 
         //Creation de type de vente
         $typeVentes = [];
-        for ($i=0; $i < 3; $i++) { 
+        for ($i=0; $i < 4; $i++) { 
             $typeVente = (new TypeVente())
             ->setNomTypeVente($faker->randomElement(['Bon de commande','Internet','Hybride','Vente direct']))
             ->setCreatedAt(new \DateTimeImmutable());
@@ -94,7 +97,33 @@ class UserFixures extends Fixture
         $manager->persist($typeVente);
         }
 
+        //creation des themes
+        $themes = [];
+        for ($i=0; $i < 5; $i++) { 
+            $theme = (new Theme())
+            ->setNomTheme($faker->randomElement(['Sport','Culture','Musique','Art','Nature']))
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setCreateur($faker->randomElement($admin,$users));
+        $themes[] = $theme;
+        $manager->persist($theme);
+        }
 
+        // creations des ecoles
+        $ecoles = [];
+        for ($i=0; $i < 5; $i++) { 
+            $ecole = (new Ecole())
+                ->setCode($faker->unique()->numerify('#####'))
+                ->setGenre($faker->randomElement(['Primaire', 'Collège', 'Lycée', 'Maternelle']))
+                ->setNom($faker->company())
+                ->setTel($faker->phoneNumber('0#########'))
+                ->setEmail($faker->unique()->safeEmail())
+                ->setActive($faker->boolean(90))
+                ->setCreatedAt(new \DateTimeImmutable())
+                ->setAdresse($faker->randomElement($adresses));
+
+        $ecole[] = $ecole; 
+        $manager->persist($ecole);
+        }
         $manager->flush();
     }
 }
