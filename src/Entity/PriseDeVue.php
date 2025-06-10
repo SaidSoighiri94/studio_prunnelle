@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PriseDeVueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,6 +54,20 @@ class PriseDeVue
     #[ORM\ManyToOne(inversedBy: 'priseDeVues')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Theme $theme = null;
+
+    /**
+     * @var Collection<int, Pochette>
+     */
+    #[ORM\ManyToMany(targetEntity: Pochette::class, inversedBy: 'priseDeVues')]
+    private Collection $pochette;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $Commentaires = null;
+
+    public function __construct()
+    {
+        $this->pochette = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -198,6 +214,42 @@ class PriseDeVue
     public function setTheme(?Theme $theme): static
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pochette>
+     */
+    public function getPochette(): Collection
+    {
+        return $this->pochette;
+    }
+
+    public function addPochette(Pochette $pochette): static
+    {
+        if (!$this->pochette->contains($pochette)) {
+            $this->pochette->add($pochette);
+        }
+
+        return $this;
+    }
+
+    public function removePochette(Pochette $pochette): static
+    {
+        $this->pochette->removeElement($pochette);
+
+        return $this;
+    }
+
+    public function getCommentaires(): ?string
+    {
+        return $this->Commentaires;
+    }
+
+    public function setCommentaires(?string $Commentaires): static
+    {
+        $this->Commentaires = $Commentaires;
 
         return $this;
     }

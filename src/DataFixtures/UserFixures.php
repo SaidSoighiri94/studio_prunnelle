@@ -12,6 +12,9 @@ use App\entity\TypeVente;
 use App\Entity\Theme;
 use App\Entity\Ecole;
 use App\Entity\PriseDeVue;
+use App\Entity\Pochette;
+use App\Entity\Planche;
+use Symfony\Bundle\FrameworkBundle\Command\SecretsSetCommand;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -103,7 +106,7 @@ class UserFixures extends Fixture
             $theme = (new Theme())
             ->setNomTheme($faker->randomElement(['Sport','Culture','Musique','Art','Nature']))
             ->setCreatedAt(new \DateTimeImmutable())
-            ->setCreateur($faker->randomElement($admin,$users));
+            ->setCreateur($faker->randomElement([$admin, ...$users]));
         $themes[] = $theme;
         $manager->persist($theme);
         }
@@ -119,10 +122,64 @@ class UserFixures extends Fixture
                 ->setEmail($faker->unique()->safeEmail())
                 ->setActive($faker->boolean(90))
                 ->setCreatedAt(new \DateTimeImmutable())
-                ->setAdresse($faker->randomElement($adresses));
+                ->setAdresse($adresses[$i]);
 
-        $ecole[] = $ecole; 
+        $ecoles[] = $ecole; 
         $manager->persist($ecole);
+        }
+
+        $pochettes = [];
+        // Creation de 10 pochettes
+        for ($i=0; $i < 2; $i++) { 
+            $pochette = (new Pochette())
+                ->setNomPochette($faker->randomElement(['Individuelle','Fratrie']))
+                ->setCreatedAt(new \DateTimeImmutable())
+                ->setCreateur($faker->randomElement([$admin, ...$users]));
+
+            $pochettes[] = $pochette;
+            $manager->persist($pochette);
+        }
+        // Creation de 10 planches
+        $planches = [];
+        for ($i=0; $i < 10; $i++) { 
+            $planche = (new Planche())
+                ->setNomPlanche($faker->randomElement([ 
+                    'Page souvenir',
+                    'Multi avec marque page',
+                    '9x13',
+                    '10x15 et identités',
+                    'Portrait couleur',
+                    'Portrait noir et blanc',
+                    'Double 13x18',
+                    'Quatre 9x13']))
+                ->setCreateur($faker->randomElement([$admin, ...$users]))
+                ->setCreateAt(new \DateTimeImmutable())
+                ->setUpdatedAt(new \DateTimeImmutable())
+                ->addPochette($faker->randomElement($pochettes));
+
+            $planches[] = $planche;
+            $manager->persist($planche);
+        }
+
+        $priseVues = [];
+        // Creation des prise de vue
+        for ($i=0; $i < 10; $i++) { 
+            $priseDeVue = (new PriseDeVue())
+                ->setDatePriseVue(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 year', 'now')))
+                ->setCratedAt(new \DateTimeImmutable())
+                ->setPrixParent($faker->randomFloat(2, 5, 100))
+                ->setPrixEcole($faker->randomFloat(2, 5, 100))
+                ->setEcole($faker->randomElement($ecoles))
+                ->setPhotographe($faker->randomElement([$admin, ...$users]))
+                ->setTypeDePrise($faker->randomElement($typePrises))
+                ->setTypeVente($faker->randomElement($typeVentes))
+                ->setTheme($faker->randomElement($themes))
+                ->setNbEleve($faker->numberBetween(10, 30))
+                ->setNbClasse($faker->numberBetween(1, 5))
+                ->setCommentaires($faker->optional()->text(200))
+                ->addPochette($faker->randomElement($pochettes));       
+        $priseVues[] = $priseDeVue;    
+        $manager->persist($priseDeVue);
         }
         $manager->flush();
     }

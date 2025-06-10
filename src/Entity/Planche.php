@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PlancheRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: PlancheRepository::class)]
 class Planche
@@ -26,9 +28,18 @@ class Planche
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'planche')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Pochette $pochette = null;
+    /**
+     * @var Collection<int, Pochette>
+     */
+
+    #[ORM\ManyToMany(targetEntity: Pochette::class, inversedBy: 'planches')]
+    private Collection $pochettes;
+
+    public function __construct()
+    {
+        $this->pochettes = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -83,14 +94,26 @@ class Planche
         return $this;
     }
 
-    public function getPochette(): ?Pochette
+   /**
+     * @return Collection<int, Pochette>
+     */
+    public function getPochettes(): Collection
     {
-        return $this->pochette;
+        return $this->pochettes;
     }
 
-    public function setPochette(?Pochette $pochette): static
+    public function addPochette(Pochette $pochette): static
     {
-        $this->pochette = $pochette;
+        if (!$this->pochettes->contains($pochette)) {
+            $this->pochettes->add($pochette);
+        }
+
+        return $this;
+    }
+
+    public function removePochette(Pochette $pochette): static
+    {
+        $this->pochettes->removeElement($pochette);
 
         return $this;
     }

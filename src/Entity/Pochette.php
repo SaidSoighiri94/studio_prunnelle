@@ -25,12 +25,22 @@ class Pochette
     /**
      * @var Collection<int, Planche>
      */
-    #[ORM\OneToMany(targetEntity: Planche::class, mappedBy: 'pochette')]
-    private Collection $planche;
+    #[ORM\ManyToMany(targetEntity: Planche::class, mappedBy: 'pochettes')]
+    private Collection $planches;
+
+    /**
+     * @var Collection<int, PriseDeVue>
+     */
+    #[ORM\ManyToMany(targetEntity: PriseDeVue::class, mappedBy: 'pochette')]
+    private Collection $priseDeVues;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
-        $this->planche = new ArrayCollection();
+        $this->planches = new ArrayCollection();
+        $this->priseDeVues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,16 +75,16 @@ class Pochette
     /**
      * @return Collection<int, Planche>
      */
-    public function getPlanche(): Collection
+    public function getPlanches(): Collection
     {
-        return $this->planche;
+        return $this->planches;
     }
 
     public function addPlanche(Planche $planche): static
     {
-        if (!$this->planche->contains($planche)) {
-            $this->planche->add($planche);
-            $planche->setPochette($this);
+        if (!$this->planches->contains($planche)) {
+            $this->planches->add($planche);
+            $planche->addPochette($this);
         }
 
         return $this;
@@ -82,12 +92,49 @@ class Pochette
 
     public function removePlanche(Planche $planche): static
     {
-        if ($this->planche->removeElement($planche)) {
+        if ($this->planches->removeElement($planche)) {
             // set the owning side to null (unless already changed)
-            if ($planche->getPochette() === $this) {
-                $planche->setPochette(null);
-            }
+             $planche->removePochette($this); 
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriseDeVue>
+     */
+    public function getPriseDeVues(): Collection
+    {
+        return $this->priseDeVues;
+    }
+
+    public function addPriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if (!$this->priseDeVues->contains($priseDeVue)) {
+            $this->priseDeVues->add($priseDeVue);
+            $priseDeVue->addPochette($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriseDeVue(PriseDeVue $priseDeVue): static
+    {
+        if ($this->priseDeVues->removeElement($priseDeVue)) {
+            $priseDeVue->removePochette($this);
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
