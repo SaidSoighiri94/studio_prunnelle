@@ -7,7 +7,10 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
 use App\Entity\Adresse;
+use App\Entity\TypePriseVue;
+use App\entity\TypeVente;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class UserFixures extends Fixture
 {
@@ -68,6 +71,29 @@ class UserFixures extends Fixture
         $manager->persist($adresse);
 
         }
+
+        // Creation des type de prise de vue
+        $typePrises = [];
+        for ($i=0; $i < 5; $i++) { 
+            $typePrise = (new TypePriseVue())
+            ->setNomTypePrise($faker->randomElement(['Individuel','Groupe seul','Individiuel + groupe', 'Mixte','groupe']))
+            ->setCreatedAt(new \DateTimeImmutable());
+
+        $typePrises[] = $typePrise;
+        $manager->persist($typePrise); 
+        }
+
+        //Creation de type de vente
+        $typeVentes = [];
+        for ($i=0; $i < 3; $i++) { 
+            $typeVente = (new TypeVente())
+            ->setNomTypeVente($faker->randomElement(['Bon de commande','Internet','Hybride','Vente direct']))
+            ->setCreatedAt(new \DateTimeImmutable());
+
+        $typeVentes[] = $typeVente;
+        $manager->persist($typeVente);
+        }
+
 
         $manager->flush();
     }
