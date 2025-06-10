@@ -253,4 +253,12 @@ class PriseDeVue
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return sprintf(
+            'Prise de vue du %s pour %d élèves',
+            $this->datePriseVue ? $this->datePriseVue->format('Y-m-d') : 'date inconnue',
+            $this->nbEleve ?? 0
+        );
+    }
 }

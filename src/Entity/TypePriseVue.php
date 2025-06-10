@@ -105,4 +105,8 @@ class TypePriseVue
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->nomTypePrise ?? 'Type de prise de vue';
+    }
 }

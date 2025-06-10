@@ -117,4 +117,8 @@ class Planche
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->nomPlanche;
+    }
 }

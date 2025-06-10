@@ -138,4 +138,8 @@ class Pochette
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->nomPochette ?: 'Pochette sans nom';
+    }
 }

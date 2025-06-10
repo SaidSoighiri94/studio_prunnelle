@@ -5,7 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Adresse;
 use App\Entity\Ecole;
+use App\Entity\Planche;
+use App\Entity\Pochette;
 use App\Entity\PriseDeVue;
+use App\Entity\Theme;
+use App\Entity\TypePriseVue;
+use App\Entity\TypeVente;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -52,9 +57,16 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
-        yield MenuItem::linkToCrud('Prise de vue', 'fas fa-camera',PriseDeVue::class);
         yield MenuItem::linkToCrud('Adresses', 'fas fa-map-marker', Adresse::class);
         yield MenuItem::linkToCrud('Ecoles', 'fas fa-building', Ecole::class);
+        yield MenuItem::linkToCrud('Prise de vue', 'fas fa-camera',PriseDeVue::class);
+        yield MenuItem::linkToCrud('Thèmes', 'fas fa-paint-brush', Theme::class);
+        yield MenuItem::linkToCrud('Types de prise', 'fas fa-camera-retro', TypePriseVue::class);
+        yield MenuItem::linkToCrud('Types de vente', 'fas fa-shopping-cart', TypeVente::class);
+        yield MenuItem::linkToCrud('Pochettes', 'fas fa-folder', Pochette::class);
+        yield MenuItem::linkToCrud('Planches', 'fas fa-images', Planche::class);
+        
+       
         
  
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
