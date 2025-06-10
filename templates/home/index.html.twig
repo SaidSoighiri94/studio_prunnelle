@@ -14,52 +14,87 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1 class="display-4 fw-bold">Studio Prunelle</h1>
-                    <p class="lead">Votre partenaire de confiance pour la photographie scolaire</p>
+                    <h1 class="display-4 fw-bold">Gestion Photos Scolaires</h1>
+                    <p class="lead">Plateforme interne de gestion des séances photographiques</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Services Section -->
+    <!-- Fonctionnalités Principales -->
     <div class="container py-5">
-        <h2 class="text-center mb-5">Nos Services</h2>
+        <h2 class="text-center mb-5">Fonctionnalités Principales</h2>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title h5">Photos de Classe</h3>
-                        <p class="card-text">Des photos de classe professionnelles qui immortalisent les moments précieux.</p>
+                        <i class="fas fa-calendar-alt mb-3 fs-2 text-primary"></i>
+                        <h3 class="card-title h5">Planification</h3>
+                        <p class="card-text">Gestion des plannings et organisation des séances photos</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title h5">Portraits Individuels</h3>
-                        <p class="card-text">Des portraits personnalisés mettant en valeur chaque élève.</p>
+                        <i class="fas fa-images mb-3 fs-2 text-primary"></i>
+                        <h3 class="card-title h5">Gestion Photos</h3>
+                        <p class="card-text">Organisation et traitement des séances photographiques</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h3 class="card-title h5">Événements Scolaires</h3>
-                        <p class="card-text">Couverture photographique des événements importants de l'école.</p>
+                        <i class="fas fa-chart-line mb-3 fs-2 text-primary"></i>
+                        <h3 class="card-title h5">Statistiques</h3>
+                        <p class="card-text">Suivi et analyse des données des séances</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Contact Section -->
+    <!-- Statistiques Rapides -->
     <div class="bg-light py-5">
         <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="stat-card p-3">
+                        <h3 class="h2 fw-bold text-primary">{{ totalEcoles ?? '0' }}</h3>
+                        <p class="text-muted">Écoles Partenaires</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stat-card p-3">
+                        <h3 class="h2 fw-bold text-primary">{{ totalPhotos ?? '0' }}</h3>
+                        <p class="text-muted">Séances Réalisées</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stat-card p-3">
+                        <h3 class="h2 fw-bold text-primary">{{ totalPhotographes ?? '0' }}</h3>
+                        <p class="text-muted">Photographes Actifs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Connexion -->
+    <div class="bg-white py-5">
+        <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <h2 class="mb-4">Contactez-nous</h2>
-                    <p class="mb-4">Pour plus d'informations ou pour planifier une séance photo, n'hésitez pas à nous contacter.</p>
-                    <a href="#" class="btn btn-primary btn-lg">Nous Contacter</a>
+                <div class="col-md-6 text-center">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-5">
+                            <h2 class="h3 mb-4">Accès Sécurisé</h2>
+                            <p class="text-muted mb-4">Connexion requise pour accéder à l'interface de gestion</p>
+                            <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-lock me-2"></i>Connexion
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
