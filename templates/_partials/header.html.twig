@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ path('app_home') }}">
                 <i class="fas fa-camera me-2"></i>
@@ -9,19 +9,27 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
                     </li>
-                    {% if is_granted('ROLE_USER') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tableau de bord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-                        </li>
-                    {% endif %}
                 </ul>
+                <div class="d-flex align-items-center">
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-tachometer-alt me-2"></i>Tableau de bord
+                            </a>
+                            <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">
+                                <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>Connexion
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>

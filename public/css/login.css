@@ -1,0 +1,54 @@
+:root {
+    --primary-color: #2C3E50;    /* Bleu marine professionnel */
+    --secondary-color: #34495E;   /* Bleu gris */
+    --accent-color: #3498DB;      /* Bleu clair pour les actions */
+    --light-color: #ECF0F1;      /* Gris très clair pour les fonds */
+    --dark-color: #2C3E50;       /* Bleu foncé pour les textes */
+}
+
+.login-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+}
+
+.login-card {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.login-title {
+    color: var(--primary-color);
+}
+
+.login-input {
+    border: 1px solid var(--light-color);
+}
+
+.login-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.login-btn {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 12px;
+    font-weight: 500;
+}
+
+.login-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.login-icon {
+    color: var(--accent-color);
+}
