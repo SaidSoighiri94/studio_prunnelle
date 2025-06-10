@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pochette{% endblock %}
+
+{% block body %}
+    <h1>Edit Pochette</h1>
+
+    {{ include('pochette/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_pochette_index') }}">back to list</a>
+
+    {{ include('pochette/_delete_form.html.twig') }}
+{% endblock %}

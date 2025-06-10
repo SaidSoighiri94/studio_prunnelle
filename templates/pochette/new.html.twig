@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Pochette{% endblock %}
+
+{% block body %}
+    <h1>Create new Pochette</h1>
+
+    {{ include('pochette/_form.html.twig') }}
+
+    <a href="{{ path('app_pochette_index') }}">back to list</a>
+{% endblock %}

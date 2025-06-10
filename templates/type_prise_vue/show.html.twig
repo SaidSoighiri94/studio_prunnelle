@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePriseVue{% endblock %}
+
+{% block body %}
+    <h1>TypePriseVue</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_prise_vue.id }}</td>
+            </tr>
+            <tr>
+                <th>NomTypePrise</th>
+                <td>{{ type_prise_vue.nomTypePrise }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_prise_vue_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}">edit</a>
+
+    {{ include('type_prise_vue/_delete_form.html.twig') }}
+{% endblock %}

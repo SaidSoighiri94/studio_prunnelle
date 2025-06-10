@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pochette index{% endblock %}
+
+{% block body %}
+    <h1>Pochette index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomPochette</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pochette in pochettes %}
+            <tr>
+                <td>{{ pochette.id }}</td>
+                <td>{{ pochette.nomPochette }}</td>
+                <td>{{ pochette.createdAt ? pochette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_pochette_show', {'id': pochette.id}) }}">show</a>
+                    <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pochette_new') }}">Create new</a>
+{% endblock %}

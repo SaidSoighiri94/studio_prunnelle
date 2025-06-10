@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePriseVue index{% endblock %}
+
+{% block body %}
+    <h1>TypePriseVue index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomTypePrise</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_prise_vue in type_prise_vues %}
+            <tr>
+                <td>{{ type_prise_vue.id }}</td>
+                <td>{{ type_prise_vue.nomTypePrise }}</td>
+                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_type_prise_vue_show', {'id': type_prise_vue.id}) }}">show</a>
+                    <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_prise_vue_new') }}">Create new</a>
+{% endblock %}

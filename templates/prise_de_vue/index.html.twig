@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PriseDeVue index{% endblock %}
+
+{% block body %}
+    <h1>PriseDeVue index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DatePriseVue</th>
+                <th>CratedAt</th>
+                <th>UpdatedAt</th>
+                <th>NbEleve</th>
+                <th>Nb_classe</th>
+                <th>PrixEcole</th>
+                <th>PrixParent</th>
+                <th>Commentaires</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prise_de_vue in prise_de_vues %}
+            <tr>
+                <td>{{ prise_de_vue.id }}</td>
+                <td>{{ prise_de_vue.datePriseVue ? prise_de_vue.datePriseVue|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ prise_de_vue.cratedAt ? prise_de_vue.cratedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ prise_de_vue.updatedAt ? prise_de_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ prise_de_vue.nbEleve }}</td>
+                <td>{{ prise_de_vue.nbClasse }}</td>
+                <td>{{ prise_de_vue.prixEcole }}</td>
+                <td>{{ prise_de_vue.prixParent }}</td>
+                <td>{{ prise_de_vue.Commentaires }}</td>
+                <td>
+                    <a href="{{ path('app_prise_de_vue_show', {'id': prise_de_vue.id}) }}">show</a>
+                    <a href="{{ path('app_prise_de_vue_edit', {'id': prise_de_vue.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prise_de_vue_new') }}">Create new</a>
+{% endblock %}

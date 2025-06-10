@@ -1,0 +1,42 @@
+{% block sidebar %}
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3 class="text-light mb-0">Studio Prunelle</h3>
+    </div>
+    
+    <nav class="sidebar-nav">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">
+                    <i class="fas fa-home me-2"></i>Accueil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_ecole' %}active{% endif %}" href="{{ path('app_ecole_index') }}">
+                    <i class="fas fa-school me-2"></i>Écoles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_prise_de_vue' %}active{% endif %}" href="{{ path('app_prise_de_vue_index') }}">
+                    <i class="fas fa-camera me-2"></i>Prises de vue
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_pochette' %}active{% endif %}" href="{{ path('app_pochette_index') }}">
+                    <i class="fas fa-folder me-2"></i>Pochettes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_theme' %}active{% endif %}" href="{{ path('app_theme_index') }}">
+                    <i class="fas fa-palette me-2"></i>Thèmes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with 'app_adresse' %}active{% endif %}" href="{{ path('app_adresse_index') }}">
+                    <i class="fas fa-map-marker-alt me-2"></i>Adresses
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}

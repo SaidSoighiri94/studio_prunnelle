@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PriseDeVue{% endblock %}
+
+{% block body %}
+    <h1>PriseDeVue</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prise_de_vue.id }}</td>
+            </tr>
+            <tr>
+                <th>DatePriseVue</th>
+                <td>{{ prise_de_vue.datePriseVue ? prise_de_vue.datePriseVue|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CratedAt</th>
+                <td>{{ prise_de_vue.cratedAt ? prise_de_vue.cratedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ prise_de_vue.updatedAt ? prise_de_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NbEleve</th>
+                <td>{{ prise_de_vue.nbEleve }}</td>
+            </tr>
+            <tr>
+                <th>Nb_classe</th>
+                <td>{{ prise_de_vue.nbClasse }}</td>
+            </tr>
+            <tr>
+                <th>PrixEcole</th>
+                <td>{{ prise_de_vue.prixEcole }}</td>
+            </tr>
+            <tr>
+                <th>PrixParent</th>
+                <td>{{ prise_de_vue.prixParent }}</td>
+            </tr>
+            <tr>
+                <th>Commentaires</th>
+                <td>{{ prise_de_vue.Commentaires }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prise_de_vue_index') }}">back to list</a>
+
+    <a href="{{ path('app_prise_de_vue_edit', {'id': prise_de_vue.id}) }}">edit</a>
+
+    {{ include('prise_de_vue/_delete_form.html.twig') }}
+{% endblock %}

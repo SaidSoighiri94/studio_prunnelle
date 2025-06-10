@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pochette{% endblock %}
+
+{% block body %}
+    <h1>Pochette</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pochette.id }}</td>
+            </tr>
+            <tr>
+                <th>NomPochette</th>
+                <td>{{ pochette.nomPochette }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ pochette.createdAt ? pochette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pochette_index') }}">back to list</a>
+
+    <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}">edit</a>
+
+    {{ include('pochette/_delete_form.html.twig') }}
+{% endblock %}

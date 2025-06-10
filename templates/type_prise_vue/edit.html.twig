@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypePriseVue{% endblock %}
+
+{% block body %}
+    <h1>Edit TypePriseVue</h1>
+
+    {{ include('type_prise_vue/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_prise_vue_index') }}">back to list</a>
+
+    {{ include('type_prise_vue/_delete_form.html.twig') }}
+{% endblock %}

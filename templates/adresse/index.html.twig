@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Adresses{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active">Adresses</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Liste des Adresses</h1>
+                    </div>
+                    <a href="{{ path('app_adresse_new') }}" class="btn login-btn">
+                        <i class="fas fa-plus-circle me-2"></i>Nouvelle Adresse
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Rue</th>
+                                <th>Ville</th>
+                                <th>Code Postal</th>
+                                <th>Pays</th>
+                                <th>Dernière modification</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for adresse in adresses %}
+                            <tr>
+                                <td>{{ adresse.rue }}</td>
+                                <td>{{ adresse.ville }}</td>
+                                <td>{{ adresse.codePostale }}</td>
+                                <td>{{ adresse.pays }}</td>
+                                <td>{{ adresse.updatedAt ? adresse.updatedAt|date('d/m/Y') : '' }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           title="Voir les détails">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}" 
+                                           class="btn btn-sm btn-outline-secondary"
+                                           title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-2x mb-3 d-block"></i>
+                                    Aucune adresse trouvée
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .table th {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .btn-group .btn {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+{% endblock %}
