@@ -1,54 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ecole{% endblock %}
+{% block title %}Détails de l'école{% endblock %}
 
 {% block body %}
-    <h1>Ecole</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_ecole_index') }}">Écoles</a></li>
+                                <li class="breadcrumb-item active">Détails</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Détails de l'école</h1>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ecole.id }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ ecole.code }}</td>
-            </tr>
-            <tr>
-                <th>Genre</th>
-                <td>{{ ecole.genre }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ ecole.nom }}</td>
-            </tr>
-            <tr>
-                <th>Tel</th>
-                <td>{{ ecole.tel }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ ecole.email }}</td>
-            </tr>
-            <tr>
-                <th>Active</th>
-                <td>{{ ecole.active ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ ecole.createdAt ? ecole.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ ecole.updatedAt ? ecole.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 200px;">Code</th>
+                                <td>{{ ecole.code }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Nom</th>
+                                <td>{{ ecole.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Genre</th>
+                                <td>{{ ecole.genre }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Téléphone</th>
+                                <td>{{ ecole.tel }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>{{ ecole.email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Statut</th>
+                                <td>
+                                    <span class="badge {{ ecole.active ? 'bg-success' : 'bg-danger' }}">
+                                        {{ ecole.active ? 'Actif' : 'Inactif' }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Date de création</th>
+                                <td>{{ ecole.createdAt ? ecole.createdAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Dernière modification</th>
+                                <td>{{ ecole.updatedAt ? ecole.updatedAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <a href="{{ path('app_ecole_index') }}">back to list</a>
-
-    <a href="{{ path('app_ecole_edit', {'id': ecole.id}) }}">edit</a>
-
-    {{ include('ecole/_delete_form.html.twig') }}
+                <div class="mt-4">
+                    <a href="{{ path('app_ecole_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    <a href="{{ path('app_ecole_edit', {'id': ecole.id}) }}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Modifier
+                    </a>
+                    {{ include('ecole/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

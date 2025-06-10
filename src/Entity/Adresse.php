@@ -34,6 +34,16 @@ class Adresse
     #[ORM\OneToOne(mappedBy: 'adresse', cascade: ['persist', 'remove'])]
     private ?Ecole $ecole = null;
 
+    public function __toString(): string
+    {
+        return sprintf('%s, %s %s, %s',
+            $this->rue,
+            $this->codePostale,
+            $this->ville,
+            $this->pays
+        );
+    }
+
     public function getId(): ?int
     {
         return $this->id;

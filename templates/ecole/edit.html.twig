@@ -1,13 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Ecole{% endblock %}
+{% block title %}Modifier l'école{% endblock %}
 
 {% block body %}
-    <h1>Edit Ecole</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_ecole_index') }}">Écoles</a></li>
+                                <li class="breadcrumb-item active">Modifier</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Modifier l'école</h1>
+                    </div>
+                </div>
 
-    {{ include('ecole/_form.html.twig', {'button_label': 'Update'}) }}
+                {{ include('ecole/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
 
-    <a href="{{ path('app_ecole_index') }}">back to list</a>
-
-    {{ include('ecole/_delete_form.html.twig') }}
+                <div class="mt-4">
+                    <a href="{{ path('app_ecole_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    {{ include('ecole/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
