@@ -1,20 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}home | studio-prunelle{% endblock %}
+{% block title %}Studio Prunelle - Accueil{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container-fluid p-0">
+    <!-- Hero Section -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 fw-bold">Studio Prunelle</h1>
+                    <p class="lead">Votre partenaire de confiance pour la photographie scolaire</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Accueil✅</h1>
+    <!-- Services Section -->
+    <div class="container py-5">
+        <h2 class="text-center mb-5">Nos Services</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Photos de Classe</h3>
+                        <p class="card-text">Des photos de classe professionnelles qui immortalisent les moments précieux.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Portraits Individuels</h3>
+                        <p class="card-text">Des portraits personnalisés mettant en valeur chaque élève.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Événements Scolaires</h3>
+                        <p class="card-text">Couverture photographique des événements importants de l'école.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Naslane/Desktop/studio_prunelle/studio_prunelle/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/Naslane/Desktop/studio_prunelle/studio_prunelle/templates/home/index.html.twig</code></li>
-    </ul>
+    <!-- Contact Section -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2 class="mb-4">Contactez-nous</h2>
+                    <p class="mb-4">Pour plus d'informations ou pour planifier une séance photo, n'hésitez pas à nous contacter.</p>
+                    <a href="#" class="btn btn-primary btn-lg">Nous Contacter</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
