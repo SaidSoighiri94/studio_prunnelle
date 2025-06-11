@@ -1,34 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TypePriseVue{% endblock %}
+{% block title %}Détails du Type de Prise de Vue{% endblock %}
 
 {% block body %}
-    <h1>TypePriseVue</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_type_prise_vue_index') }}">Types de prise de vue</a></li>
+                                <li class="breadcrumb-item active">Détails</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">{{ type_prise_vue.nomTypePrise }}</h1>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ type_prise_vue.id }}</td>
-            </tr>
-            <tr>
-                <th>NomTypePrise</th>
-                <td>{{ type_prise_vue.nomTypePrise }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 200px;">Type de prise de vue</th>
+                                <td>{{ type_prise_vue.nomTypePrise }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Date de création</th>
+                                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Dernière modification</th>
+                                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <a href="{{ path('app_type_prise_vue_index') }}">back to list</a>
+                <div class="mt-4">
+                    <a href="{{ path('app_type_prise_vue_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Modifier
+                    </a>
+                    {{ include('type_prise_vue/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}">edit</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
 
-    {{ include('type_prise_vue/_delete_form.html.twig') }}
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
 {% endblock %}

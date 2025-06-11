@@ -14,6 +14,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PHOTOGRAPHE = 'ROLE_PHOTOGRAPHE';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -76,6 +80,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->pochettes = new ArrayCollection();
         $this->planches = new ArrayCollection();
         $this->priseDeVues = new ArrayCollection();
+        $this->roles = [self::ROLE_USER];
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

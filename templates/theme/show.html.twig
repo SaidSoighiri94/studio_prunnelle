@@ -1,34 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Theme{% endblock %}
+{% block title %}Détails du Thème{% endblock %}
 
 {% block body %}
-    <h1>Theme</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_theme_index') }}">Thèmes</a></li>
+                                <li class="breadcrumb-item active">{{ theme.nomTheme }}</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">{{ theme.nomTheme }}</h1>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ theme.id }}</td>
-            </tr>
-            <tr>
-                <th>NomTheme</th>
-                <td>{{ theme.nomTheme }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ theme.createdAt ? theme.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ theme.updatedAt ? theme.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 200px;">Nom du thème</th>
+                                <td>{{ theme.nomTheme }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Créateur</th>
+                                <td>{{ theme.createur.email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Date de création</th>
+                                <td>{{ theme.createdAt ? theme.createdAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Dernière modification</th>
+                                <td>{{ theme.updatedAt ? theme.updatedAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <a href="{{ path('app_theme_index') }}">back to list</a>
+                <div class="mt-4">
+                    <a href="{{ path('app_theme_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    <a href="{{ path('app_theme_edit', {'id': theme.id}) }}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Modifier
+                    </a>
+                    {{ include('theme/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_theme_edit', {'id': theme.id}) }}">edit</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
 
-    {{ include('theme/_delete_form.html.twig') }}
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+{% endblock %}
 {% endblock %}

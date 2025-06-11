@@ -1,4 +1,6 @@
-<form method="post" action="{{ path('app_type_prise_vue_delete', {'id': type_prise_vue.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('app_type_prise_vue_delete', {'id': type_prise_vue.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce type de prise de vue ?');" class="d-inline">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type_prise_vue.id) }}">
-    <button class="btn">Delete</button>
+    <button type="submit" class="btn btn-outline-danger">
+        <i class="fas fa-trash-alt me-2"></i>Supprimer
+    </button>
 </form>

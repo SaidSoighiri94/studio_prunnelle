@@ -1,4 +1,35 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="form-group">
+        {{ form_errors(form) }}
+        
+        {% for field in form %}
+            {% if not field.rendered %}
+                <div class="mb-3">
+                    {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {% if field.vars.block_prefixes[1] is defined and field.vars.block_prefixes[1] == 'entity' %}
+                        {% if field.vars.expanded %}
+                            {{ form_widget(field) }}
+                        {% else %}
+                            {{ form_widget(field, {'attr': {
+                                'class': 'form-select login-input'
+                            }}) }}
+                        {% endif %}
+                    {% else %}
+                        {{ form_widget(field, {'attr': {
+                            'class': 'form-control login-input',
+                            'placeholder': field.vars.label
+                        }}) }}
+                    {% endif %}
+                    {{ form_errors(field, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary login-btn">
+            <i class="fas fa-save me-2 login-icon"></i>
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
 {{ form_end(form) }}

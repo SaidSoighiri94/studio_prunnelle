@@ -1,39 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TypePriseVue index{% endblock %}
+{% block title %}Types de Prise de Vue{% endblock %}
 
 {% block body %}
-    <h1>TypePriseVue index</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active">Types de prise de vue</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Types de Prise de Vue</h1>
+                    </div>
+                    <a href="{{ path('app_type_prise_vue_new') }}" class="btn login-btn">
+                        <i class="fas fa-plus-circle me-2"></i>Nouveau Type
+                    </a>
+                </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NomTypePrise</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for type_prise_vue in type_prise_vues %}
-            <tr>
-                <td>{{ type_prise_vue.id }}</td>
-                <td>{{ type_prise_vue.nomTypePrise }}</td>
-                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_type_prise_vue_show', {'id': type_prise_vue.id}) }}">show</a>
-                    <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Type de prise de vue</th>
+                                <th>Date de création</th>
+                                <th>Dernière modification</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for type_prise_vue in type_prise_vues %}
+                            <tr>
+                                <td>{{ type_prise_vue.nomTypePrise }}</td>
+                                <td>{{ type_prise_vue.createdAt ? type_prise_vue.createdAt|date('d/m/Y') : '' }}</td>
+                                <td>{{ type_prise_vue.updatedAt ? type_prise_vue.updatedAt|date('d/m/Y') : '' }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_type_prise_vue_show', {'id': type_prise_vue.id}) }}" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           title="Voir les détails">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ path('app_type_prise_vue_edit', {'id': type_prise_vue.id}) }}" 
+                                           class="btn btn-sm btn-outline-secondary"
+                                           title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">
+                                    <i class="fas fa-camera fa-2x mb-3 d-block"></i>
+                                    Aucun type de prise de vue trouvé
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_type_prise_vue_new') }}">Create new</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .table th {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .btn-group .btn {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
 {% endblock %}

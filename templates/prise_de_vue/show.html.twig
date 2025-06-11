@@ -1,54 +1,137 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}PriseDeVue{% endblock %}
+{% block title %}Détails de la Prise de Vue{% endblock %}
 
 {% block body %}
-    <h1>PriseDeVue</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_prise_de_vue_index') }}">Prises de vue</a></li>
+                                <li class="breadcrumb-item active">Détails</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Détails de la Prise de Vue</h1>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ prise_de_vue.id }}</td>
-            </tr>
-            <tr>
-                <th>DatePriseVue</th>
-                <td>{{ prise_de_vue.datePriseVue ? prise_de_vue.datePriseVue|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CratedAt</th>
-                <td>{{ prise_de_vue.cratedAt ? prise_de_vue.cratedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ prise_de_vue.updatedAt ? prise_de_vue.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NbEleve</th>
-                <td>{{ prise_de_vue.nbEleve }}</td>
-            </tr>
-            <tr>
-                <th>Nb_classe</th>
-                <td>{{ prise_de_vue.nbClasse }}</td>
-            </tr>
-            <tr>
-                <th>PrixEcole</th>
-                <td>{{ prise_de_vue.prixEcole }}</td>
-            </tr>
-            <tr>
-                <th>PrixParent</th>
-                <td>{{ prise_de_vue.prixParent }}</td>
-            </tr>
-            <tr>
-                <th>Commentaires</th>
-                <td>{{ prise_de_vue.Commentaires }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 200px;">École</th>
+                                <td>{{ prise_de_vue.ecole.nom }} ({{ prise_de_vue.ecole.code }})</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Date de prise de vue</th>
+                                <td>{{ prise_de_vue.datePriseVue ? prise_de_vue.datePriseVue|date('d/m/Y') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Type de prise de vue</th>
+                                <td>{{ prise_de_vue.typeDePrise.nomTypePrise }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Type de vente</th>
+                                <td>{{ prise_de_vue.typeVente.nomTypeVente }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Nombre d'élèves</th>
+                                <td>{{ prise_de_vue.nbEleve }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Nombre de classes</th>
+                                <td>{{ prise_de_vue.nbClasse }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Prix école</th>
+                                <td>{{ prise_de_vue.prixEcole }}€</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Prix parent</th>
+                                <td>{{ prise_de_vue.prixParent }}€</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Photographe</th>
+                                <td>{{ prise_de_vue.photographe.email }}</td>
+                            </tr>
+                            {% if prise_de_vue.Commentaires %}
+                            <tr>
+                                <th class="bg-light">Commentaires</th>
+                                <td>{{ prise_de_vue.Commentaires }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th class="bg-light">Date de création</th>
+                                <td>{{ prise_de_vue.cratedAt ? prise_de_vue.cratedAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Dernière modification</th>
+                                <td>{{ prise_de_vue.updatedAt ? prise_de_vue.updatedAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            {% if prise_de_vue.pochette|length > 0 %}
+                            <tr>
+                                <th class="bg-light">Pochettes et Planches</th>
+                                <td>
+                                    <div class="pochettes-list">
+                                        {% for pochette in prise_de_vue.pochette %}
+                                            <div class="pochette-item mb-2">
+                                                <strong class="text-primary">{{ pochette.nomPochette }}</strong>
+                                                {% if pochette.planches|length > 0 %}
+                                                    <ul class="list-unstyled ms-3 mb-0 small">
+                                                        {% for planche in pochette.planches %}
+                                                            <li><i class="fas fa-image me-2"></i>{{ planche.nomPlanche }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
 
-    <a href="{{ path('app_prise_de_vue_index') }}">back to list</a>
-
-    <a href="{{ path('app_prise_de_vue_edit', {'id': prise_de_vue.id}) }}">edit</a>
-
-    {{ include('prise_de_vue/_delete_form.html.twig') }}
+                <div class="mt-4">
+                    <a href="{{ path('app_prise_de_vue_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    <a href="{{ path('app_prise_de_vue_edit', {'id': prise_de_vue.id}) }}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Modifier
+                    </a>
+                    {{ include('prise_de_vue/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .pochettes-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .pochette-item {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .pochette-item:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+        
+        .pochette-item ul {
+            margin-top: 0.25rem;
+        }
+    </style>
+{% endblock %}
+

@@ -22,17 +22,26 @@ class PochetteForm extends AbstractType
             ])
             ->add('createur', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'email',
+                'label' => 'Créateur',
             ])
             ->add('planches', EntityType::class, [
                 'class' => Planche::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nomPlanche',
+                'label' => 'Planches associées',
                 'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
             ])
             ->add('priseDeVues', EntityType::class, [
                 'class' => PriseDeVue::class,
-                'choice_label' => 'id',
+                'choice_label' => function(PriseDeVue $priseDeVue) {
+                    return $priseDeVue->getEcole()->getNom() . ' - ' . $priseDeVue->getDatePriseVue()->format('d/m/Y');
+                },
+                'label' => 'Prises de vue',
                 'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
             ])
         ;
     }

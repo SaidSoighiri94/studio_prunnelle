@@ -12,12 +12,12 @@ class TypePriseVueForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomTypePrise')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
+            ->add('nomTypePrise', null, [
+                'label' => 'Type de prise de vue',
+                'attr' => [
+                    'class' => 'form-control login-input',
+                    'placeholder' => 'Entrez le type de prise de vue'
+                ]
             ])
         ;
     }

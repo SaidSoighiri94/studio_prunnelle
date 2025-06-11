@@ -14,16 +14,16 @@ class ThemeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomTheme')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
+            ->add('nomTheme', null, [
+                'label' => 'Nom du thème',
+                'attr' => [
+                    'placeholder' => 'Entrez le nom du thème'
+                ]
             ])
             ->add('createur', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'email',
+                'label' => 'Créateur'
             ])
         ;
     }

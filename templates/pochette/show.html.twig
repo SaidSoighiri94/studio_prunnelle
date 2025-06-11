@@ -1,30 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pochette{% endblock %}
+{% block title %}Détails de la Pochette{% endblock %}
 
 {% block body %}
-    <h1>Pochette</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_pochette_index') }}">Pochettes</a></li>
+                                <li class="breadcrumb-item active">Détails</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">{{ pochette.nomPochette }}</h1>
+                    </div>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ pochette.id }}</td>
-            </tr>
-            <tr>
-                <th>NomPochette</th>
-                <td>{{ pochette.nomPochette }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ pochette.createdAt ? pochette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 200px;">Nom de la pochette</th>
+                                <td>{{ pochette.nomPochette }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Date de création</th>
+                                <td>{{ pochette.createdAt ? pochette.createdAt|date('d/m/Y à H:i') : '' }}</td>
+                            </tr>
+                            {% if pochette.planches|length > 0 %}
+                            <tr>
+                                <th class="bg-light">Planches associées</th>
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        {% for planche in pochette.planches %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-image me-2 text-primary"></i>{{ planche.nomPlanche }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if pochette.priseDeVues|length > 0 %}
+                            <tr>
+                                <th class="bg-light">Prises de vue</th>
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        {% for priseDeVue in pochette.priseDeVues %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-camera me-2 text-primary"></i>
+                                                {{ priseDeVue.ecole.nom }} - {{ priseDeVue.datePriseVue|date('d/m/Y') }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
 
-    <a href="{{ path('app_pochette_index') }}">back to list</a>
+                <div class="mt-4">
+                    <a href="{{ path('app_pochette_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-edit me-2"></i>Modifier
+                    </a>
+                    {{ include('pochette/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}">edit</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
 
-    {{ include('pochette/_delete_form.html.twig') }}
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+{% endblock %}
 {% endblock %}

@@ -1,37 +1,124 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pochette index{% endblock %}
+{% block title %}Liste des Pochettes{% endblock %}
 
 {% block body %}
-    <h1>Pochette index</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active">Pochettes</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Liste des Pochettes</h1>
+                    </div>
+                    <a href="{{ path('app_pochette_new') }}" class="btn login-btn">
+                        <i class="fas fa-plus-circle me-2"></i>Nouvelle Pochette
+                    </a>
+                </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>NomPochette</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for pochette in pochettes %}
-            <tr>
-                <td>{{ pochette.id }}</td>
-                <td>{{ pochette.nomPochette }}</td>
-                <td>{{ pochette.createdAt ? pochette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_pochette_show', {'id': pochette.id}) }}">show</a>
-                    <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nom de la pochette</th>
+                                <th>Planches associées</th>
+                                <th>Prises de vue</th>
+                                <th>Date de création</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for pochette in pochettes %}
+                            <tr>
+                                <td>{{ pochette.nomPochette }}</td>
+                                <td>
+                                    {% if pochette.planches|length > 0 %}
+                                        <ul class="list-unstyled mb-0">
+                                        {% for planche in pochette.planches %}
+                                            <li><i class="fas fa-image me-2 text-primary"></i>{{ planche.nomPlanche }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span class="text-muted">Aucune planche</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if pochette.priseDeVues|length > 0 %}
+                                        <ul class="list-unstyled mb-0">
+                                        {% for priseDeVue in pochette.priseDeVues %}
+                                            <li><i class="fas fa-camera me-2 text-primary"></i>{{ priseDeVue.ecole.nom }} - {{ priseDeVue.datePriseVue|date('d/m/Y') }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span class="text-muted">Aucune prise de vue</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ pochette.createdAt ? pochette.createdAt|date('d/m/Y') : '' }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_pochette_show', {'id': pochette.id}) }}" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           title="Voir les détails">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ path('app_pochette_edit', {'id': pochette.id}) }}" 
+                                           class="btn btn-sm btn-outline-secondary"
+                                           title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    <i class="fas fa-folder-open fa-2x mb-3 d-block"></i>
+                                    Aucune pochette trouvée
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_pochette_new') }}">Create new</a>
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .table th {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .btn-group .btn {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary-color);
+        }
+
+        .list-unstyled {
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 0.9em;
+        }
+    </style>
 {% endblock %}

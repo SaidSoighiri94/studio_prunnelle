@@ -1,11 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Pochette{% endblock %}
+{% block title %}Nouvelle Pochette{% endblock %}
 
 {% block body %}
-    <h1>Create new Pochette</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_pochette_index') }}">Pochettes</a></li>
+                                <li class="breadcrumb-item active">Nouvelle</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Nouvelle Pochette</h1>
+                    </div>
+                </div>
 
-    {{ include('pochette/_form.html.twig') }}
+                {{ include('pochette/_form.html.twig') }}
 
-    <a href="{{ path('app_pochette_index') }}">back to list</a>
+                <div class="mt-3">
+                    <a href="{{ path('app_pochette_index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,13 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Pochette{% endblock %}
+{% block title %}Modifier la Pochette{% endblock %}
 
 {% block body %}
-    <h1>Edit Pochette</h1>
+    <div class="container py-4">
+        <div class="card login-card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_pochette_index') }}">Pochettes</a></li>
+                                <li class="breadcrumb-item active">Modifier</li>
+                            </ol>
+                        </nav>
+                        <h1 class="login-title mt-2">Modifier la Pochette</h1>
+                    </div>
+                </div>
 
-    {{ include('pochette/_form.html.twig', {'button_label': 'Update'}) }}
+                {{ include('pochette/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
 
-    <a href="{{ path('app_pochette_index') }}">back to list</a>
-
-    {{ include('pochette/_delete_form.html.twig') }}
+                <div class="mt-4">
+                    <a href="{{ path('app_pochette_index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                    </a>
+                    {{ include('pochette/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
