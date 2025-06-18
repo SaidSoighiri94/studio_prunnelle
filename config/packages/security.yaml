@@ -42,8 +42,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/$, roles: PUBLIC_ACCESS } 
         - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
     #  Hiérarchie des rôles (facultatif mais recommandé)
     role_hierarchy:

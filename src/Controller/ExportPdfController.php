@@ -12,7 +12,7 @@ use Twig\Environment;
 
 final class ExportPdfController extends AbstractController
 {
-    #[Route('ecole/{id}/export/pdf', name: 'app_export_pdf_ecole')] 
+    #[Route('ecole/{id}/exportpdf', name: 'app_export_pdf_ecole')] 
     public function exportPdfEcole(Ecole $ecole, Pdf $knpSnappyPdf, Environment $twig): Response
     {
         // Render the HTML content for the PDF
@@ -36,6 +36,7 @@ final class ExportPdfController extends AbstractController
     {
         return $this->render('export_pdf/index.html.twig', [
             'controller_name' => 'ExportPdfController',
+            
         ]);
     }
 }
